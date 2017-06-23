@@ -168,16 +168,10 @@
   \global\let\@author\@empty
   \global\let\@title\@empty
   \global\let\@advisor\@empty
-  \global\let\@institute\@empty
-  \global\let\@posteryear\@empty
-  \global\let\@email\@empty
   \global\let\maketitle\relax
   \global\let\author\relax
   \global\let\title\relax
   \global\let\advisor\relax
-  \global\let\institute\relax
-  \global\let\posteryear\relax
-  \global\let\email\relax
 }
 
 % Real title command. Copied from article.cls and adapted.
@@ -252,7 +246,13 @@
   \hrule%
   \medskip
   \@posteryear~\@institute\\
-  \href{mailto:\@email}{\texttt{\@email}}
+  \href{mailto:\@email}{\texttt{\@email}}%
+  \global\let\@institute\@empty%
+  \global\let\@posteryear\@empty%
+  \global\let\@email\@empty%
+  \global\let\institute\relax%
+  \global\let\posteryear\relax%
+  \global\let\email\relax%
 }
 
 % Blocktitle command. Spacing, coloredbox and a fixed size parbox with the title.
