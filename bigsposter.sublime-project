@@ -22,7 +22,8 @@
                 "*.dpth",
                 "*.sublime-workspace",
                 "*.dep",
-                "*.synctex.gz(busy)"
+                "*.synctex.gz(busy)",
+                "samplebib.bib"
             ]
         }
 	]
