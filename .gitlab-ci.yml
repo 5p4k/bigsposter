@@ -1,0 +1,18 @@
+stages:
+  - build
+
+pdflatex:
+  stage: build
+  image: radkappe/latex
+  before_script:
+    - export NIGHTLY_ARCHIVE=bigsposter_nightly_$CI_COMMIT_SHA.tar.gz
+  script:
+    - latexmk -pdf demo.tex
+    - latexmk -c demo.tex
+    - latexmk -pdf bigsposter.tex
+    - latexmk -c bigsposter.tex
+    - tar -czvf $NIGHTLY_ARCHIVE demo.pdf demo.tex bigsposter.pdf bigsposter.cls
+  artifacts:
+    paths:
+      - bigsposter.pdf
+      - $NIGHTLY_ARCHIVE
