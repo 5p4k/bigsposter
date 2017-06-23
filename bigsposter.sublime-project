@@ -1,0 +1,29 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+            "file_exclude_patterns": [
+                "*.aux",
+                "*.fdb_latexmk",
+                "*.log",
+                "*.pdf",
+                "*.synctex.gz",
+                "*.toc",
+                "*.out",
+                "*.snm",
+                "*.nav",
+                "*.fls",
+                "*.pyc",
+                "*.auxlock",
+                "*.bbl",
+                "*.blg",
+                "*.md5",
+                "*.dpth",
+                "*.sublime-workspace",
+                "*.dep",
+                "*.synctex.gz(busy)"
+            ]
+        }
+	]
+}
