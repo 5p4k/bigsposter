@@ -1,0 +1,278 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref,listings,xcolor}
+\usepackage[toc]{multitoc}
+\renewcommand*{\multicolumntoc}{2}
+\setlength{\columnseprule}{0pt}
+\lstset{
+  basicstyle=\small\ttfamily,
+  basewidth=0.5em,
+  language={[LaTeX]TeX},
+  breaklines=true,
+  frame=single,
+  morekeywords={
+    maketitle, blocktitle, advisor, blockbreak, posteryear, email,
+    institute, blockfoot, blockcaption, includegraphics,
+    blockfootnotemark, blockfootnotetext, blockfootnote, blockwidth,
+    @unilogo, @bigslogo
+  },
+  keywordstyle=\color[rgb]{0,0,1},
+  commentstyle=\color[rgb]{0.133,0.545,0.133},
+  stringstyle=\color[rgb]{0.627,0.126,0.941},
+  xleftmargin=1em,
+  xrightmargin=1em
+}
+
+\title{The \texttt{bigsposter} class}
+\date{June 23, 2017}
+\author{Pietro Saccardi\\\href{mailto:saccardi@or.uni-bonn.de}{\texttt{saccardi@or.uni-bonn.de}}}
+
+\newcommand{\cmdref}[2][\textbackslash{}]{\hyperref[h:#2]{\texttt{#1#2}}}
+\newcommand{\pkgref}[1]{\href{https://www.ctan.org/pkg/#1}{\texttt{#1} package}}
+
+\makeatletter
+\let\origsubsection\subsection
+\renewcommand\subsection{\@ifstar{\starsubsection}{\nostarsubsection}}
+
+\newcommand\nostarsubsection[1]
+{\subsectionprelude\origsubsection{#1}\subsectionpostlude}
+
+\newcommand\starsubsection[1]
+{\subsectionprelude\origsubsection*{#1}\subsectionpostlude}
+
+\newcommand\subsectionprelude{%
+  \vspace{\bigskipamount}
+}
+
+\newcommand\subsectionpostlude{\vspace{-0.5ex}}
+\makeatother
+
+\setcounter{tocdepth}{2}
+
+\raggedbottom
+
+\begin{document}
+  \maketitle
+  \begin{abstract}
+    This class provides some basic environments to generate a PhD poster for a poster exhibition, and has been tailored on an old poster template for the BIGS program at the University of Bonn.
+  \end{abstract}
+  \vfill
+  \tableofcontents
+\newpage
+  \section{Getting started quickly}
+    Copy-paste ready template, you just need to insert your personal information. This generates a simple 2-columns poster with a single title. Hopefully that's all you need to start.
+    \begin{lstlisting}
+\documentclass[a2paper]{bigsposter}
+
+% Setup personal details
+\author{Surname, Name}
+\advisor{Prof.\ Dr.\ Advisor}
+\title{The Title}
+\posteryear{2017}
+\email{yourname@institute.org}
+\institute{Research Institute}
+
+% These packages are optional (but you will use them)
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath, amsthm, amssymb}
+
+\begin{document}
+  \maketitle
+  \begin{blockrow}
+    \blocktitle{Title}
+    Text goes here.
+    \blockbreak
+    \blockfoot
+  \end{blockrow}
+\end{document}
+    \end{lstlisting}
+
+  \section{Guide by example}
+    The BIGS poster template consists of a \hyperref[h:titlefoot]{\emph{title header}}, and a several \emph{blocks} in the body, arranged in \hyperref[h:blockrow]{\emph{block rows}}. Ideally, it should consist of four blocks arranged in two rows, with row-major reading layout, in such a way that, when printed on a A2 paper sheet, each block is roughly an A4 page. The last block should include the \hyperref[h:blockfoot]{\emph{block footer}} and the bibliography. Each block may have one or more \hyperref[h:blocktitle]{\emph{block titles}}.
+
+    This class also provides a minimal support for \hyperref[h:blockfootnote]{foot notes} and \hyperref[h:blockfigure]{figures} within the blocks.
+
+
+    \subsection{Document class}
+    \begin{lstlisting}
+\documentclass[a2paper]{bigsposter} % or
+\documentclass[a2paper, fixed]{bigsposter}
+    \end{lstlisting}
+    You are allowed to specify any paper size that is supported by the \pkgref{geometry}. The default size for BIGS poster is \texttt{a2paper}. The class already sets up the geometry with the following options: \texttt{margin=5mm, ignoreall}. All margins, font sizing and padding are set up relatively to the paper size.
+
+    The \texttt{fixed} option is present only for retro-compatibility and should be used only in conjunction with \texttt{a2paper}. This sets all geometric parameters to the fixed values that were present in the old, original \LaTeX{} template; the parameters relative to the paper size generate slightly different placement for logo and header (although they can be used to generate posters in sizes other than A2).
+
+    \subsection{Header and footer}\label{h:titlefoot}
+    \begin{lstlisting}
+\author{Surname, Name}
+\advisor{Prof.\ Dr.\ Advisor}
+\title{The Title}
+\posteryear{2017}
+\email{yourname@institute.org}
+\institute{Research Institute}
+% After \begin{document}
+\maketitle
+% Before the last \end{blockrow}
+\blockfoot
+    \end{lstlisting}
+    You need to set up your details in the preamble for the title to be typeset correctly via \texttt{\textbackslash{}maketitle} and the footer via \cmdref{blockfoot}.
+
+    \subsection{Typesetting blocks}
+    \begin{lstlisting}
+\begin{blockrow}
+  \blocktitle{Title}
+  Fist block
+  \blockbreak
+  Second block
+\end{blockrow}
+    \end{lstlisting}
+    Use the \cmdref[]{blockrow} environment to open a new block row. Within it, blocks behave like columns; use \cmdref{blockbreak} to introduce a manual break, otherwise \LaTeX{} will balance the columns automatically. New titles can be issued with \cmdref{blocktitle}, also in the middle of the block. Within a block, you can access the width of the block with the macro \cmdref{blockwidth}.
+
+    \subsection{Footnotes}
+    \begin{lstlisting}
+% ...
+Some text inside a block row\blockfootnote{This will appear at the bottom.}.
+    \end{lstlisting}
+    The class defines an alternative footnote command, \cmdref{blockfootnote} which works inside a block row.
+
+    \subsection{Figures}
+    \begin{lstlisting}
+% Within a block row
+\begin{blockfigure}
+  \includegraphics{stuff.pdf}
+  \blockcaption{Caption of this figure.}
+\end{blockfigure}
+    \end{lstlisting}
+    Within a block, use the \cmdref[]{blockfigure} environment to open a figure and \cmdref{blockcaption} to write out the caption. The \pkgref{caption} is being used internally, so you can freely customize the appearance of the caption with \texttt{\textbackslash{}captionsetup}.
+
+    You may use foot notes in the caption, but you have to separate marker and text, using \cmdref{blockfootnotemark} and \cmdref{blockfootnotetext} as follows:
+    \begin{lstlisting}
+% ...
+  \blockcaption{Caption of this figure\blockfootnotemark.}
+\end{blockfigure}
+\blockfootnotetext{Here goes the footnote.}
+    \end{lstlisting}
+\newpage
+    \subsection{Minipages and side-by-side content}
+    \begin{lstlisting}
+% Inside a block row
+\begin{minipage}[t]{0.3\blockwidth}
+  Text on the left.
+\end{minipage}
+\begin{minipage}[t]{0.7\blockwidth}
+  \begin{blockfigure}
+    \includegraphics{stuff.pdf}
+    \blockcaption{Figures can go side by side.}
+  \end{blockfigure}
+\end{minipage}
+    \end{lstlisting}
+    You can use the \texttt{minipage} environment to place side-to-side content within a single block. This is the main usage case for \cmdref{blockwidth}. Figures and footnotes would work perfectly inside a minipage; you may want to change the width of the caption in this case.
+
+    It must be noted that minipage overrides \texttt{\textbackslash{}textwidth}, which is otherwise set to the overall width of all the blocks and their separators.
+
+    \subsection{Bibliography}
+    \begin{lstlisting}
+% After the last \blockbreak
+  \nocite{*} % If you want to include entries that are not cited
+  \bibliography{samplebib} % samplebib.bib in the same folder
+  \blockfoot
+\end{blockrow}
+    \end{lstlisting}
+    You can use the usual bibliography within a block row. Place your bibliography right before \cmdref{blockfoot}.
+
+  \section{Command reference}
+
+    \subsection{\texttt{blockrow}}\label{h:blockrow}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\begin{blockrow}    % Default: two columns, or
+\begin{blockrow}[4] % any number
+    \end{lstlisting}
+    Opens a multicolumn, framed environment. Takes one optional argument, defaulting to 2, which expresses the number of columns. Other \texttt{\textbackslash{}block}* commands are not guaranteed to work outside a block row. There are two counters affected by the creation of a block row, named respectively \texttt{blockrow} and \texttt{block} (the meaning is obvious).
+
+    \subsection{\texttt{blockbreak}}\label{h:blockbreak}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\blockbreak % No argument
+    \end{lstlisting}
+    Opens a new block, increases the \texttt{block} counter; takes no argument. Valid only within a block row. Beware of empty lines around this command (issue \ref{issue:whitespace}).
+
+    \subsection{\texttt{blocktitle}}\label{h:blocktitle}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\blocktitle{Title} % One mandatory argument
+    \end{lstlisting}
+    Typesets a new title, valid only within a block row; it does not have a corresponding section level like standard \TeX{} commands, it is just a different aesthetic typeset. Beware of empty lines around this command (issue \ref{issue:whitespace}).
+
+    \subsection{\texttt{blockfoot}}\label{h:blockfoot}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\blockfoot % No argument
+    \end{lstlisting}
+    Valid only within a block row, typesets a ruler followed by year, institute and email. It should be the last command within the last block row.
+
+    \subsection{\texttt{blockwidth}}\label{h:blockwidth}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\blockwidth % A length macro
+    \end{lstlisting}
+    A length macro that can be used for sizing. Valid only within a block row; it expresses the width of the text area in a block (i.e.\ the effective width after subtracting borders and padding of a single column).
+
+    \subsection{\texttt{blockfigure}}\label{h:blockfigure}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\begin{blockfigure}    % No argument
+    \end{lstlisting}
+    Just a glorified \texttt{center} enviroment with a bit less vertical space.
+
+    \subsection{\texttt{blockcaption}}\label{h:blockcaption}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\blockcaption{Caption}                 % One mandatory argument.
+\blockcaption[0.9\blockwidth]{Caption} % One optional argument, the width of the caption.
+    \end{lstlisting}
+    Typesets the caption of a figure, to be used within the \cmdref[]{blockfigure} environment. Takes one mandatory argument, the caption content, and one optional argument, the width of the paragraph box of the caption, which defaults to \texttt{0.8\textbackslash{}blockwidth}.
+    Within a caption, \cmdref{blockfootnote} cannot be used, it must be broken into \cmdref{blockfootnotemark} (inside the caption) and \cmdref{blockfootnotetext} (outside the figure).
+
+    \subsection{\texttt{blockfootnotemark}}\label{h:blockfootnotemark}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\blockfootnotemark % No argument
+    \end{lstlisting}
+    Typesets the superscript number which marks a new foot note.
+
+    \subsection{\texttt{blockfootnotetext}}\label{h:blockfootnotetext}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\blockfootnotetext{Foot note content} % One mandatory argument
+    \end{lstlisting}
+    Typesets the foot note text of the last \cmdref{blockfootnotemark} invoked.
+
+    \subsection{\texttt{blockfootnote}}\label{h:blockfootnote}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\blockfootnote{Foot note content} % One mandatory argument
+    \end{lstlisting}
+    Combines \cmdref{blockfootnotemark} and \cmdref{blockfootnotetext}.
+
+    \subsection{Special drawing commands \texttt{@unilogo} and \texttt{@bigslogo}}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\makeatletter
+\@unilogo{5em}  % One length mandatory argument
+\@bigslogo{8em} % One length mandatory argument
+\makeatother
+    \end{lstlisting}
+    These two command typeset in Ti\textit{k}Z the logo of the University of Bonn and BIGS program, respectively, automatically scaled to have the width specified in the unique argument. No padding is added.
+\bigskip\bigskip
+  \section{Technical notes}
+    The need for overriding footnotes, figures and captions arises from the fact that the core environment that provides a block row is made using the \texttt{framed} and \texttt{multicols} environment, in which these objects do not work.
+    \subsection{Used packages and classes}
+    \begin{itemize}\setlength{\itemindent}{4em}
+      \item[\texttt{article}] as a base class.
+      \item[\texttt{tikz}] for typesetting logos.
+      \item[\texttt{geometry}] for setting up page layout.
+      \item[\texttt{parskip}] to skip white space instead of using indentation in the text body.
+      \item[\texttt{xcolor}] for typesetting logos and titles.
+      \item[\texttt{lmodern}] to suppress missing symbol warnings on the custom sized font title.
+      \item[\texttt{framed}] to generate a robust frame around each block row.
+      \item[\texttt{hyperref}] for linking the email.
+      \item[\texttt{multicol}] to produce the subdivision between blocks.
+      \item[\texttt{caption}] to produce captions inside a different figure environment.
+    \end{itemize}
+    \subsection{Known issues and limitations}
+      \subsubsection{Whitespace around block breaks and titles} \label{issue:whitespace} The \cmdref{blocktitle} and \cmdref{blockbreak} are not completely tolerant w.r.t.\ new paragraphs and new lines in their immediate surroundings. Normally a sectioning command starts a new paragraph if needed, and does not add up space if it is on top of a new page. It is not the case with these two commands; if the user accidentally typesets a new paragraph, it may add some extra whitespace before or after a block break or a title, even if at the beginning of a new block.
+      \subsubsection{Vertical spacing in figures} When a block figure is started inside a minipage, the vertical spacing seem to be broken; the content is shifted slightly out of the minipage, and there is no vertical spacing between the content and the possible caption.
+      \subsubsection{Footnote limitation} Foot notes do not support custom markers.
+\end{document}

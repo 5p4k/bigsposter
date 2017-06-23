@@ -14,7 +14,7 @@
 % The Current Maintainer of this work is Pietro Saccardi.
 %
 % This work consists of the files bigsposter.cls, bigsposter-example.cls
-% and bigsposter-doc.tex.
+% and bigsposter.tex.
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{bigsposter}[2017/06/20]
