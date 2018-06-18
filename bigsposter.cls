@@ -274,6 +274,19 @@
 % Blockcaption command. A centered parbox which calls \captionof{figure}{...}
 \newcommand{\blockcaption}[2][0.8\blockwidth]{\par\centering{\parbox{#1}{\captionof{figure}{#2}}}}
 
+
+% BUGFIXES FOR EXISTING PKGS ---------------------------
+
+% Bugfixes space before theorems and definition with parskip
+% http://tex.stackexchange.com/a/26350/26355
+\newcommand{\patchthmspacing}[1]{%
+   \@for\theoremstyle:=#1\do{%
+     \expandafter\g@addto@macro\csname th@\theoremstyle\endcsname{%
+       \addtolength\thm@preskip\parskip%
+     }%
+   }%
+}
+
 % FOOTNOTES ENABLING SECTION ---------------------------
 
 % This is a bit trickier. Essentially we use the standard footnotes, but we
