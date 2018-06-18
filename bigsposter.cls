@@ -196,8 +196,12 @@
             \@title\par%
           }%
           \vspace{\@titletoauthorskip}%
-          {\@authoradvisorfontsize\bfseries\@author\par}\vspace{\@authortoadvisorskip}%
-          {\@authoradvisorfontsize\bfseries Advisor: \@advisor\par}%
+          {\@authoradvisorfontsize\bfseries\@author\par}%
+          % Optionally skip emitting advisor
+          \ifx\@advisor\empty\else%
+            \vspace{\@authortoadvisorskip}%
+            {\@authoradvisorfontsize\bfseries Advisor: \@advisor\par}%
+          \fi%
         }%
       }%
     }%

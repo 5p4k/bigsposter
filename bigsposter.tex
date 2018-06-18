@@ -88,6 +88,7 @@
 
 % Setup personal details
 \author{Surname, Name}
+% Can also be empty! \advisor{}
 \advisor{Prof.\ Dr.\ Advisor}
 \title{The Title}
 \posteryear{2017}
@@ -128,6 +129,7 @@
     \subsection{Header and footer}\label{h:titlefoot}
     \begin{lstlisting}
 \author{Surname, Name}
+% Can also be empty! \advisor{}
 \advisor{Prof.\ Dr.\ Advisor}
 \title{The Title}
 \posteryear{2017}
@@ -138,7 +140,7 @@
 % Before the last \end{blockrow}
 \blockfoot
     \end{lstlisting}
-    You need to set up your details in the preamble for the title to be typeset correctly via \texttt{\textbackslash{}maketitle} and the footer via \cmdref{blockfoot}.
+    You need to set up your details in the preamble for the title to be typeset correctly via \texttt{\textbackslash{}maketitle} and the footer via \cmdref{blockfoot}. The advisor field can also be set to an empty value. This will skip emitting the whole ``Advisor: \textit{Name Of Advisor}'' line.
 
     \subsection{Typesetting blocks}
     \begin{lstlisting}
