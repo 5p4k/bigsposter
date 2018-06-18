@@ -14,6 +14,15 @@
 % The Current Maintainer of this work is Pietro Saccardi.
 %
 % This work consists of the files bigsposter.cls, demo.tex, bigsposter.tex.
+%
+% -----
+%
+% The repository for this work is located at
+%   https://gitlab.com/5p4k/bigsposter
+%   https://github.com/LizardM4/bigsposter (mirror)
+%
+% Pull requests are very welcome!
+%
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{bigsposter}[2017/06/20]
