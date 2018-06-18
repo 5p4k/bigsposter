@@ -158,15 +158,21 @@ Some text inside a block row\blockfootnote{This will appear at the bottom.}.
     \end{lstlisting}
     The class defines an alternative footnote command, \cmdref{blockfootnote} which works inside a block row.
 
-    \subsection{Figures}
+    \subsection{Figures and tables}
     \begin{lstlisting}
 % Within a block row
 \begin{blockfigure}
   \includegraphics{stuff.pdf}
   \blockcaption{Caption of this figure.}
 \end{blockfigure}
+\begin{blocktable}
+  \begin{tabular}{c|c}
+    one & two
+  \end{tabular}
+  \blockcaption{Caption of this table.}
+\end{blocktable}
     \end{lstlisting}
-    Within a block, use the \cmdref[]{blockfigure} environment to open a figure and \cmdref{blockcaption} to write out the caption. The \pkgref{caption} is being used internally, so you can freely customize the appearance of the caption with \texttt{\textbackslash{}captionsetup}.
+    Within a block, use the \cmdref[]{blockfigure} environment to open a figure and \cmdref{blockcaption} to write out the caption. The \pkgref{caption} is being used internally, so you can freely customize the appearance of the caption with \texttt{\textbackslash{}captionsetup}. A similar environment is prebuilt for tables too. Use the \cmdref[]{blocktable} as a replacement for the standard \texttt{table} environment; \cmdref{blockcaption} is used to generate the caption of tables too.
 
     You may use foot notes in the caption, but you have to separate marker and text, using \cmdref{blockfootnotemark} and \cmdref{blockfootnotetext} as follows:
     \begin{lstlisting}
@@ -242,12 +248,18 @@ Some text inside a block row\blockfootnote{This will appear at the bottom.}.
     \end{lstlisting}
     Just a glorified \texttt{center} enviroment with a bit less vertical space.
 
+    \subsection{\texttt{blocktable}}\label{h:blocktable}
+    \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
+\begin{blocktable}    % No argument
+    \end{lstlisting}
+    Just a glorified \texttt{center} enviroment with a bit less vertical space.
+
     \subsection{\texttt{blockcaption}}\label{h:blockcaption}
     \begin{lstlisting}[frame=none, aboveskip=0pt, xleftmargin=0pt, xrightmargin=0pt]
 \blockcaption{Caption}                 % One mandatory argument.
 \blockcaption[0.9\blockwidth]{Caption} % One optional argument, the width of the caption.
     \end{lstlisting}
-    Typesets the caption of a figure, to be used within the \cmdref[]{blockfigure} environment. Takes one mandatory argument, the caption content, and one optional argument, the width of the paragraph box of the caption, which defaults to \texttt{0.8\textbackslash{}blockwidth}.
+    Typesets the caption of a figure, to be used within the \cmdref[]{blockfigure} and \cmdref[]{blocktable} environment. Takes one mandatory argument, the caption content, and one optional argument, the width of the paragraph box of the caption, which defaults to \texttt{0.8\textbackslash{}blockwidth}.
     Within a caption, \cmdref{blockfootnote} cannot be used, it must be broken into \cmdref{blockfootnotemark} (inside the caption) and \cmdref{blockfootnotetext} (outside the figure).
 
     \subsection{\texttt{blockfootnotemark}}\label{h:blockfootnotemark}
@@ -278,7 +290,7 @@ Some text inside a block row\blockfootnote{This will appear at the bottom.}.
     These two command typeset in Ti\textit{k}Z the logo of the University of Bonn and BIGS program, respectively, automatically scaled to have the width specified in the unique argument. No padding is added.
 \bigskip\bigskip
   \section{Technical notes}
-    The need for overriding footnotes, figures and captions arises from the fact that the core environment that provides a block row is made using the \texttt{framed} and \texttt{multicols} environment, in which these objects do not work.
+    The need for overriding footnotes, figures, tables and captions arises from the fact that the core environment that provides a block row is made using the \texttt{framed} and \texttt{multicols} environment, in which these objects do not work. In other words: floats do not work, they are just simulated.
     \subsection{Used packages and classes}
     \begin{itemize}\setlength{\itemindent}{4em}
       \item[\texttt{article}] as a base class.

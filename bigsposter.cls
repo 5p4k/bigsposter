@@ -268,11 +268,23 @@
   \medskip%
 }
 
-% Blockfigure environment. Just a center environment with a bit less spacing.
-\newenvironment{blockfigure}{\vspace{-0.5\baselineskip}\begin{center}}{\end{center}\vspace{-0.5\baselineskip}}
+% Blockfigure and blocktable environment. For now, just a center environment with a bit less spacing.
+\newenvironment{blockfigure}{%
+  \def\bigsposter@fakefloat{figure}
+  \vspace{-0.5\baselineskip}\begin{center}%
+}{%
+  \end{center}\vspace{-0.5\baselineskip}%
+}
 
-% Blockcaption command. A centered parbox which calls \captionof{figure}{...}
-\newcommand{\blockcaption}[2][0.8\blockwidth]{\par\centering{\parbox{#1}{\captionof{figure}{#2}}}}
+\newenvironment{blocktable}{%
+  \def\bigsposter@fakefloat{table}
+  \vspace{-0.5\baselineskip}\begin{center}%
+}{%
+  \end{center}\vspace{-0.5\baselineskip}%
+}
+
+% Blockcaption command. A centered parbox which calls \captionof{figure|table}{...}
+\newcommand{\blockcaption}[2][0.8\blockwidth]{\par\centering{\parbox{#1}{\captionof{\bigsposter@fakefloat}{#2}}}}
 
 
 % BUGFIXES FOR EXISTING PKGS ---------------------------
