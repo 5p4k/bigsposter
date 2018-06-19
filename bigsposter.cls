@@ -250,7 +250,7 @@
 
 % Blockbreak command. Just a glorified columnbreak with some void elements to
 % make it work also if there is no input on one side
-\newcommand{\blockbreak}{\par\stepcounter{block}\columnbreak\mbox{}}
+\newcommand{\blockbreak}{\par\stepcounter{block}\columnbreak}
 
 % Blockfoot command. Space, ruler a description.
 \newcommand{\blockfoot}{
@@ -268,8 +268,9 @@
 }
 
 % Blocktitle command. Spacing, coloredbox and a fixed size parbox with the title.
-\newcommand{\blocktitle}[1]{\unskip%
-  \medskip%
+\newcommand{\blocktitle}[1]{
+  \bigskip%
+  \par%
   \setlength{\@oldFrameSep}{\fboxsep}%
   \setlength{\fboxsep}{0pt}%
   \colorbox{BigsYellow}{%
@@ -278,20 +279,20 @@
     }%
   }%
   \setlength{\fboxsep}{\@oldFrameSep}%
-  \medskip%
+  \par%
 }
 
 % Blockfigure and blocktable environment. For now, just a center environment with a bit less spacing.
 \newenvironment{blockfigure}{%
   \def\bigsposter@fakefloat{figure}
-  \vspace{-0.5\baselineskip}\begin{center}%
+  \begin{center}%
 }{%
   \end{center}\vspace{-0.5\baselineskip}%
 }
 
 \newenvironment{blocktable}{%
   \def\bigsposter@fakefloat{table}
-  \vspace{-0.5\baselineskip}\begin{center}%
+  \begin{center}%
 }{%
   \end{center}\vspace{-0.5\baselineskip}%
 }
