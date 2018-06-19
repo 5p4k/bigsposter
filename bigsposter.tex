@@ -302,6 +302,16 @@ Some text inside a block row\blockfootnote{This will appear at the bottom.}.
 \bigskip\bigskip
   \section{Technical notes}
     The need for overriding footnotes, figures, tables and captions arises from the fact that the core environment that provides a block row is made using the \texttt{framed} and \texttt{multicols} environment, in which these objects do not work. In other words: floats do not work, they are just simulated.
+    \subsection{Typsetting algorithms with \texttt{algorithm2e}}
+    Due to the fact that floats are just simulated, if you want to typeset an algorithm in your poster, you need to disable the float by explicitly positioning it with \texttt{H}:
+    \begin{lstlisting}
+\begin{algorithm}[H] % << explicitly disable float
+  First line\;
+  Second line\;
+  \caption{Algorithm name}
+\end{algorithm}
+    \end{lstlisting}
+    You can always place it inside a minipage for side-by-side content.
     \subsection{Used packages and classes}
     \begin{itemize}\setlength{\itemindent}{4em}
       \item[\texttt{article}] as a base class.

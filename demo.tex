@@ -27,6 +27,7 @@
 \documentclass[a2paper]{bigsposter}
 \usepackage{lipsum}
 \usepackage[utf8]{inputenc}
+\usepackage[linesnumbered, ruled, vlined]{algorithm2e}
 
 \author{Given names, First name}
 % Can also be empty! \advisor{}
@@ -75,6 +76,16 @@
     \end{blockfigure}
     \blockfootnotetext{As with usual footnotes, you need to split the mark and the text.}
     \textcolor{lightgray}{\lipsum[3]}
+    \IncMargin{1em}
+    \begin{algorithm}[H]
+      \uIf{you plan to use \texttt{algorithm2e}}{
+        remember to use the \texttt{H} positioning\;
+      }{
+        no worries\;
+      }
+      \caption{Happy typesetting algorithm.}
+    \end{algorithm}
+    \DecMargin{1em}
   \blockbreak
     \blocktitle{{\textellipsis}has three\textellipsis}
     \textcolor{lightgray}{\lipsum[4]}
